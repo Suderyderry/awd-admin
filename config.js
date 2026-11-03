@@ -3,6 +3,6 @@
    Kunci publik ini aman ada di sisi klien karena data dilindungi RLS.
    JANGAN PERNAH memasukkan kunci "secret" / "service_role" di sini. */
 window.SUPABASE_CONFIG = {
-  URL: 'https://rnupmsvtpvbcfssnsvva.supabase.co/rest/v1/'
+  URL: 'https://rnupmsvtpvbcfssnsvva.supabase.co',
   ANON_KEY: 'sb_publishable_BF3L3GU713VGjNEu1xq80A_f2PqHIoz'
 };
