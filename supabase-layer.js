@@ -13,6 +13,7 @@
   if (!cfg.URL || !cfg.ANON_KEY || !window.supabase) { setChip('Mode demo – Supabase belum diatur (config.js)'); return; }
 
   const sb = window.supabase.createClient(cfg.URL, cfg.ANON_KEY);
+  window.AWD_SB = sb; /* dipakai fitur Layanan/Tampilan/Hak akses menu di index.html */
   API.MOCK = false; API.req = async () => null; S.sim = false;
 
   const stable = v => JSON.stringify(v, (k, x) => x && typeof x === 'object' && !Array.isArray(x)
@@ -72,7 +73,8 @@
     }
     D.filter(r => r.t == 'merchant').forEach(r => PR[r.id] = PR[r.id] || []);
     if (v.length) { const ord = ['merchant', 'driver', 'customer']; V.length = 0; v.sort((a, b) => ord.indexOf(a.tipe) - ord.indexOf(b.tipe)).forEach(r => V.push(r.data)); } else empty.add('versi_aplikasi');
-    if (s.length) Object.assign(SET, s[0].data); else empty.add('pengaturan');
+    const sistem = s.find(r => r.kunci === 'sistem'); /* tabel pengaturan juga memuat kunci lain (layanan, tampilan, dst.) */
+    if (sistem) Object.assign(SET, sistem.data); else empty.add('pengaturan');
     seq = D.reduce((a, r) => Math.max(a, parseInt(r.id.slice(1)) || 0), 0) + 1;
     pq = Object.values(PR).flat().reduce((a, r) => Math.max(a, parseInt(String(r.id).slice(1)) || 0), 0) + 1;
     snap = {}; const now = rowsAll();
@@ -142,6 +144,7 @@
     lg.style.display = 'none';
     log('Masuk ke panel admin'); render(); renderBell(); sbr();
     listen(); schedule(0);
+    document.dispatchEvent(new Event('awd-login'));
   }
   const lo = document.createElement('button');
   lo.className = 'btn'; lo.textContent = 'Keluar'; lo.setAttribute('aria-label', 'Keluar dari panel');
