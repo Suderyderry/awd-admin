@@ -382,7 +382,7 @@ im.onload=()=>{const s=Math.min(1,max/Math.max(im.width,im.height)),c=document.c
 document.addEventListener('input',e=>{const t=e.target;if(t.dataset.c!='hd'||!S.hd)return;const k=t.dataset.k;S.hd.d[k]=t.dataset.n?+t.value:t.value;const o=$('#hv_'+k);if(o)o.textContent=t.value;$('#hp').innerHTML=HP(S.hd.d)});
 document.addEventListener('change',async e=>{const t=e.target,c=t.dataset.c;if((c!='hf'&&c!='lif')||!can('edit'))return;const f=t.files[0];if(!f)return;
 if(c=='lif'&&S.lk=='kategori'&&!/^image\/(png|jpeg)$/.test(f.type)){toast('Gunakan gambar JPG atau PNG');t.value='';return}
-try{if(c=='lif'){S.limg2=await cmp(f,160,'image/png');$('#lin').textContent='Gambar dipilih';const p=$('#lip');p.src=S.limg2;p.style.display=''}else{S.hd.d[t.dataset.k]=await cmp(f,t.dataset.k=='logo'?384:1200,t.dataset.k=='logo'?'image/png':'image/jpeg');render()}}catch(x){toast(String(x))}});
+try{if(c=='lif'){S.limg2=await cmp(f,S.lk=='kategori'?160:420,'image/png');$('#lin').textContent='Gambar dipilih';const p=$('#lip');p.src=S.limg2;p.style.display=''}else{S.hd.d[t.dataset.k]=await cmp(f,t.dataset.k=='logo'?384:1200,t.dataset.k=='logo'?'image/png':'image/jpeg');render()}}catch(x){toast(String(x))}});
 
 /* Menu samping: sembunyikan Data Pelanggan/Toko/Driver (ada di Kelola Aplikasi Android) dan Rancangan Database */
 const HIDE=['u_customer','u_merchant','u_driver','db'];
